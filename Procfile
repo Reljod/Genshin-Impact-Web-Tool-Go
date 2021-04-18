@@ -1,1 +1,1 @@
-web: bin/geshin-impact-web-go-tool-app
+web: go build -o bin\\geshin-impact-web-go-tool-app.exe web\\main.go && bin\\geshin-impact-web-go-tool-app
