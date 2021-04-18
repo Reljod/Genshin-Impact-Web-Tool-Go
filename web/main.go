@@ -8,21 +8,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 
 	_ "github.com/lib/pq"
 )
-
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	database = "genshin_impact_db"
-)
-
-var password string = "admin"
 
 var pgDb *sql.DB
 
@@ -46,15 +38,15 @@ func main() {
 
 	handler := c.Handler(router)
 	log.Fatal(http.ListenAndServe(":5000", handler))
-
-	// http.HandleFunc("/", homePage)
-	// http.HandleFunc("/characters", characterList)
-	// http.HandleFunc("/characters/add", postAddCharacter)
-	// log.Fatal(http.ListenAndServe(":5000", nil))
 }
 
 func CreateDatabase() (*sql.DB, error) {
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, database)
+	psqlconn := os.Getenv("DATABASE_URL")
+
+	if psqlconn == "" {
+		log.Fatalf("No DATABASE_URL environment variable")
+	}
+
 	db, err := sql.Open("postgres", psqlconn)
 	if err != nil {
 		return nil, err
