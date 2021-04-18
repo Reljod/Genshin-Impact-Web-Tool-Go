@@ -1,1 +1,1 @@
-web: go run web/main.go
+web: bin\geshin-impact-web-go-tool-app
