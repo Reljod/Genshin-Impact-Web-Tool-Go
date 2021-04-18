@@ -1,1 +1,1 @@
-web: bin\geshin-impact-web-go-tool-app
+web: bin/geshin-impact-web-go-tool-app
