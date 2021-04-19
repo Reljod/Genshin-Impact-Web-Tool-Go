@@ -36,8 +36,22 @@ func main() {
 		AllowCredentials: true,
 	})
 
+	addr, err := determineListenAddress()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Listening on %s...\n", addr)
 	handler := c.Handler(router)
-	log.Fatal(http.ListenAndServe(":5000", handler))
+	log.Fatal(http.ListenAndServe(addr, handler))
+}
+
+func determineListenAddress() (string, error) {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
 }
 
 func CreateDatabase() (*sql.DB, error) {
