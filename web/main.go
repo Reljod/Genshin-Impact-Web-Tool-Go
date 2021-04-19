@@ -77,7 +77,7 @@ func CreateDatabase() (*sql.DB, error) {
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("../templates/index.html")
+	t, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		log.Panic("Cannot parse Index.html template", err)
 	}
